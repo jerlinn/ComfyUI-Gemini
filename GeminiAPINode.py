@@ -74,8 +74,15 @@ class Gemini_API_Zho:
                 textoutput = "\n".join([chunk.text for chunk in response])
             else:
                 response = model.generate_content(prompt)
-                textoutput = response.text
-        
+
+                # extract text in response
+                if hasattr(response, 'candidates'):
+                    for candidate in response.candidates:
+                        if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts'):
+                            for part in candidate.content.parts:
+                                print(part.text)
+                textoutput = part.text
+
         if model_name == 'gemini-pro-vision':
             if image == None:
                 raise ValueError("gemini-pro-vision needs image")
@@ -89,8 +96,15 @@ class Gemini_API_Zho:
                     textoutput = "\n".join([chunk.text for chunk in response])
                 else:
                     response = model.generate_content([prompt, pil_image])
-                    textoutput = response.text
-        
+
+                    # extract text in response
+                    if hasattr(response, 'candidates'):
+                        for candidate in response.candidates:
+                            if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts'):
+                                for part in candidate.content.parts:
+                                    print(part.text)
+                    textoutput = part.text
+
         return (textoutput,)
 
 
@@ -139,7 +153,14 @@ class Gemini_API_Vsion_ImgURL_Zho:
             textoutput = "\n".join([chunk.text for chunk in response])
         else:
             response = model.generate_content([prompt, img])
-            textoutput = response.text
+
+            # extract text
+            if hasattr(response, 'candidates'):
+                for candidate in response.candidates:
+                    if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts'):
+                        for part in candidate.content.parts:
+                            print(part.text)
+            textoutput = part.text
         
         return (textoutput,)
 
@@ -180,7 +201,15 @@ class Gemini_API_Chat_Zho:
             self.chat = model.start_chat(history=[])
 
         response = self.chat.send_message(prompt)
-        textoutput = response.text
+
+        # extract text in
+        if hasattr(response, 'candidates'):
+            for candidate in response.candidates:
+                if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts'):
+                    for part in candidate.content.parts:
+                        print(part.text)
+        textoutput = part.text
+        
         chat_history = self.format_chat_history(self.chat)
         
         return (chat_history,)
@@ -244,7 +273,14 @@ class Gemini_API_S_Zho:
                 textoutput = "\n".join([chunk.text for chunk in response])
             else:
                 response = model.generate_content(prompt)
-                textoutput = response.text
+
+                # extract text in response
+                if hasattr(response, 'candidates'):
+                    for candidate in response.candidates:
+                        if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts'):
+                            for part in candidate.content.parts:
+                                print(part.text)
+                textoutput = part.text
         
         if model_name == 'gemini-pro-vision':
             if image == None:
@@ -259,7 +295,14 @@ class Gemini_API_S_Zho:
                     textoutput = "\n".join([chunk.text for chunk in response])
                 else:
                     response = model.generate_content([prompt, pil_image])
-                    textoutput = response.text
+
+                    # extract text in response
+                    if hasattr(response, 'candidates'):
+                        for candidate in response.candidates:
+                            if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts'):
+                                for part in candidate.content.parts:
+                                    print(part.text)
+                    textoutput = part.text
         
         return (textoutput,)
 
@@ -305,8 +348,15 @@ class Gemini_API_S_Vsion_ImgURL_Zho:
             textoutput = "\n".join([chunk.text for chunk in response])
         else:
             response = model.generate_content([prompt, img])
-            textoutput = response.text
-        
+
+            # extract text in response
+            if hasattr(response, 'candidates'):
+                for candidate in response.candidates:
+                    if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts'):
+                        for part in candidate.content.parts:
+                            print(part.text)
+            textoutput = part.text
+
         return (textoutput,)
 
 
@@ -343,7 +393,15 @@ class Gemini_API_S_Chat_Zho:
             self.chat = model.start_chat(history=[])
 
         response = self.chat.send_message(prompt)
-        textoutput = response.text
+
+        # extract text in response
+        if hasattr(response, 'candidates'):
+            for candidate in response.candidates:
+                if hasattr(candidate, 'content') and hasattr(candidate.content, 'parts'):
+                    for part in candidate.content.parts:
+                        print(part.text)
+        textoutput = part.text
+
         chat_history = self.format_chat_history(self.chat)
         
         return (chat_history,)
